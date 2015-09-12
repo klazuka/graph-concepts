@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5367C9891BA4B3CC00C46E92 /* concepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5367C9881BA4B3CC00C46E92 /* concepts.swift */; settings = {ASSET_TAGS = (); }; };
+		5367C98B1BA4B91100C46E92 /* algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5367C98A1BA4B91100C46E92 /* algorithms.swift */; settings = {ASSET_TAGS = (); }; };
 		53D260781B9B532000492E7F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D260771B9B532000492E7F /* main.swift */; };
 		53D2607F1B9B897400492E7F /* other.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53D2607E1B9B897400492E7F /* other.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -24,6 +26,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5367C9881BA4B3CC00C46E92 /* concepts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = concepts.swift; sourceTree = "<group>"; };
+		5367C98A1BA4B91100C46E92 /* algorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = algorithms.swift; sourceTree = "<group>"; };
 		53D260741B9B532000492E7F /* concepts */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = concepts; sourceTree = BUILT_PRODUCTS_DIR; };
 		53D260771B9B532000492E7F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		53D2607E1B9B897400492E7F /* other.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = other.swift; sourceTree = "<group>"; };
@@ -60,6 +64,8 @@
 			isa = PBXGroup;
 			children = (
 				53D260771B9B532000492E7F /* main.swift */,
+				5367C9881BA4B3CC00C46E92 /* concepts.swift */,
+				5367C98A1BA4B91100C46E92 /* algorithms.swift */,
 				53D2607E1B9B897400492E7F /* other.swift */,
 			);
 			path = concepts;
@@ -122,6 +128,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				53D260781B9B532000492E7F /* main.swift in Sources */,
+				5367C98B1BA4B91100C46E92 /* algorithms.swift in Sources */,
+				5367C9891BA4B3CC00C46E92 /* concepts.swift in Sources */,
 				53D2607F1B9B897400492E7F /* other.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,6 +248,7 @@
 				53D2607D1B9B532000492E7F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

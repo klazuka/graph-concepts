@@ -1,14 +1,19 @@
 import Foundation
 
-typealias Vertex = Int
+class MyVisitor: Visitor {
+  func discoverVertex(vertex: Int) {
+    print("got vertex '\(vertex)'")
+  }
+}
 
-typealias Edge = (Vertex, Vertex)
-func src(edge: Edge) -> Vertex { return edge.0 }
-func tgt(edge: Edge) -> Vertex { return edge.1 }
+struct AdjacencyListGraph: IncidenceGraph, VertexListGraph {
+  typealias Vertex = Int
+  typealias Edge = (Vertex, Vertex)
 
-
-struct AdjacencyListGraph {
   private let adjacencyLists: [Vertex:[Vertex]]
+  
+  func src(edge: Edge) -> Vertex { return edge.0 }
+  func tgt(edge: Edge) -> Vertex { return edge.1 }
   
   func vertices() -> [Vertex] {
     return Array(adjacencyLists.keys)
@@ -42,30 +47,4 @@ print(g.adjacencyLists)
 
 print(g.outEdges(1))
 
-func breadthFirstSearch(graph: AdjacencyListGraph, visitor: (Vertex -> Void)) {
-  if graph.numVertices() == 0 {
-    return
-  }
-  
-  var seen = Set<Vertex>()
-  var queue = [Vertex]()
-  let firstVertex = graph.vertices()[0]
-  print("starting with vertex \(firstVertex)")
-  queue.append(firstVertex)
-  while !queue.isEmpty {
-    let v = queue.removeFirst()
-    if seen.contains(v) {
-      continue
-    }
-    queue.appendContentsOf(graph.outEdges(v).map(tgt))
-    visitor(v)
-    seen.insert(v)
-  }
-  print("done")
-}
-
-func testVisitor(v: Vertex) -> Void {
-  print("got vertex '\(v)'")
-}
-
-breadthFirstSearch(g, visitor: testVisitor)
+breadthFirstSearch(g, visitor: MyVisitor())
