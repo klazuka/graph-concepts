@@ -20,7 +20,7 @@ func breadthFirstSearch<
       if seen.contains(v) {
         continue
       }
-      let others = graph.outEdges(v).map { graph.tgt($0) }
+      let others = graph.outEdges(v).map { graph.target($0) }
       queue.appendContentsOf(others)
       visitor.discoverVertex(v)
       seen.insert(v)

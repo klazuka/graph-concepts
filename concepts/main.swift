@@ -12,8 +12,8 @@ struct AdjacencyListGraph: IncidenceGraph, VertexListGraph {
 
   private let adjacencyLists: [Vertex:[Vertex]]
   
-  func src(edge: Edge) -> Vertex { return edge.0 }
-  func tgt(edge: Edge) -> Vertex { return edge.1 }
+  func source(edge: Edge) -> Vertex { return edge.0 }
+  func target(edge: Edge) -> Vertex { return edge.1 }
   
   func vertices() -> [Vertex] {
     return Array(adjacencyLists.keys)
