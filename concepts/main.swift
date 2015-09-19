@@ -34,17 +34,21 @@ struct AdjacencyListGraph: IncidenceGraph, VertexListGraph {
   }
 }
 
+extension AdjacencyListGraph {
+  func findVertex(name: Int) -> Vertex? {
+    guard let idx = adjacencyLists.keys.indexOf(name) else { return nil }
+    return adjacencyLists.keys[idx]
+  }
+}
+
+
 let lists = [
   1: [2, 3],
-  2: [1],
+  2: [1, 3],
   3: [1, 4],
   4: [3, 5],
   5: [4]
 ]
 let g = AdjacencyListGraph(adjacencyLists: lists)
-
-print(g.adjacencyLists)
-
-print(g.outEdges(1))
-
-breadthFirstSearch(g, visitor: MyVisitor())
+let start = g.findVertex(3)!
+breadthFirstSearch(g, startVertex: start, colorMap: DictionaryPropertyMap(), visitor: MyVisitor())

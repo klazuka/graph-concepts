@@ -42,15 +42,36 @@ protocol ReadablePropertyMap {
   func get(key: Key) -> Value
 }
 
-
-//protocol PropertyTag {
-//  typealias Kind // ????
-//}
-
-protocol PropertyGraph: Graph {
-  typealias PropertyMap: ReadablePropertyMap
-  func get(property: PropertyMap.Key) -> PropertyMap.Value
+protocol WriteablePropertyMap {
+  typealias Key
+  typealias Value
+  mutating func put(key: Key, value: Value)
 }
+
+protocol ReadWritePropertyMap: ReadablePropertyMap, WriteablePropertyMap {
+}
+
+enum VertexColorType {
+  case White, Gray, Black
+}
+
+// a `ReadWritePropertyMap` adapter for Swift's Dictionary type
+struct DictionaryPropertyMap<Key: Hashable, Value>: ReadWritePropertyMap {
+  var dict = [Key:Value]()
+  func get(key: Key) -> Value {
+    return dict[key]!
+  }
+  
+  mutating func put(key: Key, value: Value) {
+    dict[key] = value
+  }
+}
+
+
+//protocol PropertyGraph: Graph {
+//  typealias PropertyMap: ReadablePropertyMap
+//  func get(property: PropertyMap.Key) -> PropertyMap.Value
+//}
 
 
 
