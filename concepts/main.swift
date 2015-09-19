@@ -42,13 +42,37 @@ extension AdjacencyListGraph {
 }
 
 
-let lists = [
+let simpleLists = [
   1: [2, 3],
   2: [1, 3],
   3: [1, 4],
   4: [3, 5],
   5: [4]
 ]
+
+let lists = [
+  1:  [3, 4, 5],
+  2:  [5, 6],
+  3:  [10],
+  4:  [7, 8],
+  5:  [8],
+  6:  [9, 11],
+  7:  [10],
+  8:  [],
+  9:  [11, 12],
+  10: [],
+  11: [],
+  12: [],
+]
+
 let g = AdjacencyListGraph(adjacencyLists: lists)
-let start = g.findVertex(3)!
-breadthFirstSearch(g, startVertex: start, colorMap: DictionaryPropertyMap(), visitor: MyVisitor())
+
+// Topological Sort example
+let topo = topologicalSort(g)
+print("topo: ", topo)
+
+// BFS example
+//let start = g.findVertex(1)!
+//breadthFirstSearch(g, startVertex: start, colorMap: DictionaryPropertyMap(), visitor: MyVisitor())
+
+
