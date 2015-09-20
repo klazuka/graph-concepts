@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		532BD5BA1BAE60E000057249 /* SwiftGraphLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532BD5B01BAE60E000057249 /* SwiftGraphLibrary.framework */; settings = {ASSET_TAGS = (); }; };
-		532BD5BF1BAE60E000057249 /* SwiftGraphLibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BD5BE1BAE60E000057249 /* SwiftGraphLibraryTests.swift */; };
 		532BD5C91BAE614A00057249 /* algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BD5C71BAE614A00057249 /* algorithms.swift */; settings = {ASSET_TAGS = (); }; };
 		532BD5CA1BAE614A00057249 /* concepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BD5C81BAE614A00057249 /* concepts.swift */; settings = {ASSET_TAGS = (); }; };
 		532BD5CC1BAE618500057249 /* concrete_types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BD5CB1BAE618500057249 /* concrete_types.swift */; settings = {ASSET_TAGS = (); }; };
+		532BE30D1BAEDDCC00C07B5B /* TraversalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BE30C1BAEDDCC00C07B5B /* TraversalTests.swift */; };
+		532BE30F1BAEDDCC00C07B5B /* SwiftGraphLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 532BD5B01BAE60E000057249 /* SwiftGraphLibrary.framework */; settings = {ASSET_TAGS = (); }; };
 		538E67AE1BAE667C0076D26F /* graph_demo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538E67AD1BAE667C0076D26F /* graph_demo.swift */; settings = {ASSET_TAGS = (); }; };
 		538E67B81BAE66F90076D26F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538E67B11BAE66F90076D26F /* AppDelegate.swift */; settings = {ASSET_TAGS = (); }; };
 		538E67B91BAE66F90076D26F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 538E67B21BAE66F90076D26F /* Assets.xcassets */; settings = {ASSET_TAGS = (); }; };
@@ -24,7 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		532BD5BB1BAE60E000057249 /* PBXContainerItemProxy */ = {
+		532BE3101BAEDDCC00C07B5B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 53D2606C1B9B532000492E7F /* Project object */;
 			proxyType = 1;
@@ -56,12 +56,12 @@
 
 /* Begin PBXFileReference section */
 		532BD5B01BAE60E000057249 /* SwiftGraphLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftGraphLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		532BD5B91BAE60E000057249 /* SwiftGraphLibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftGraphLibraryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		532BD5BE1BAE60E000057249 /* SwiftGraphLibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftGraphLibraryTests.swift; sourceTree = "<group>"; };
-		532BD5C01BAE60E000057249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		532BD5C71BAE614A00057249 /* algorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = algorithms.swift; sourceTree = "<group>"; };
 		532BD5C81BAE614A00057249 /* concepts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = concepts.swift; sourceTree = "<group>"; };
 		532BD5CB1BAE618500057249 /* concrete_types.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = concrete_types.swift; sourceTree = "<group>"; };
+		532BE30A1BAEDDCC00C07B5B /* SwiftGraphLibraryTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftGraphLibraryTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		532BE30C1BAEDDCC00C07B5B /* TraversalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraversalTests.swift; sourceTree = "<group>"; };
+		532BE30E1BAEDDCC00C07B5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		538E679B1BAE66350076D26F /* DemoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		538E67AD1BAE667C0076D26F /* graph_demo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = graph_demo.swift; sourceTree = "<group>"; };
 		538E67B11BAE66F90076D26F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -82,11 +82,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		532BD5B61BAE60E000057249 /* Frameworks */ = {
+		532BE3071BAEDDCC00C07B5B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				532BD5BA1BAE60E000057249 /* SwiftGraphLibrary.framework in Frameworks */,
+				532BE30F1BAEDDCC00C07B5B /* SwiftGraphLibrary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,11 +112,11 @@
 			path = SwiftGraphLibrary;
 			sourceTree = "<group>";
 		};
-		532BD5BD1BAE60E000057249 /* SwiftGraphLibraryTests */ = {
+		532BE30B1BAEDDCC00C07B5B /* SwiftGraphLibraryTests */ = {
 			isa = PBXGroup;
 			children = (
-				532BD5BE1BAE60E000057249 /* SwiftGraphLibraryTests.swift */,
-				532BD5C01BAE60E000057249 /* Info.plist */,
+				532BE30C1BAEDDCC00C07B5B /* TraversalTests.swift */,
+				532BE30E1BAEDDCC00C07B5B /* Info.plist */,
 			);
 			path = SwiftGraphLibraryTests;
 			sourceTree = "<group>";
@@ -156,7 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				532BD5B11BAE60E000057249 /* SwiftGraphLibrary */,
-				532BD5BD1BAE60E000057249 /* SwiftGraphLibraryTests */,
+				532BE30B1BAEDDCC00C07B5B /* SwiftGraphLibraryTests */,
 				538E679C1BAE66350076D26F /* DemoApp */,
 				53D260751B9B532000492E7F /* Products */,
 			);
@@ -166,8 +166,8 @@
 			isa = PBXGroup;
 			children = (
 				532BD5B01BAE60E000057249 /* SwiftGraphLibrary.framework */,
-				532BD5B91BAE60E000057249 /* SwiftGraphLibraryTests.xctest */,
 				538E679B1BAE66350076D26F /* DemoApp.app */,
+				532BE30A1BAEDDCC00C07B5B /* SwiftGraphLibraryTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,22 +204,22 @@
 			productReference = 532BD5B01BAE60E000057249 /* SwiftGraphLibrary.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		532BD5B81BAE60E000057249 /* SwiftGraphLibraryTests */ = {
+		532BE3091BAEDDCC00C07B5B /* SwiftGraphLibraryTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 532BD5C61BAE60E000057249 /* Build configuration list for PBXNativeTarget "SwiftGraphLibraryTests" */;
+			buildConfigurationList = 532BE3121BAEDDCC00C07B5B /* Build configuration list for PBXNativeTarget "SwiftGraphLibraryTests" */;
 			buildPhases = (
-				532BD5B51BAE60E000057249 /* Sources */,
-				532BD5B61BAE60E000057249 /* Frameworks */,
-				532BD5B71BAE60E000057249 /* Resources */,
+				532BE3061BAEDDCC00C07B5B /* Sources */,
+				532BE3071BAEDDCC00C07B5B /* Frameworks */,
+				532BE3081BAEDDCC00C07B5B /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				532BD5BC1BAE60E000057249 /* PBXTargetDependency */,
+				532BE3111BAEDDCC00C07B5B /* PBXTargetDependency */,
 			);
 			name = SwiftGraphLibraryTests;
 			productName = SwiftGraphLibraryTests;
-			productReference = 532BD5B91BAE60E000057249 /* SwiftGraphLibraryTests.xctest */;
+			productReference = 532BE30A1BAEDDCC00C07B5B /* SwiftGraphLibraryTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		538E679A1BAE66350076D26F /* DemoApp */ = {
@@ -254,7 +254,7 @@
 					532BD5AF1BAE60E000057249 = {
 						CreatedOnToolsVersion = 7.0;
 					};
-					532BD5B81BAE60E000057249 = {
+					532BE3091BAEDDCC00C07B5B = {
 						CreatedOnToolsVersion = 7.0;
 					};
 					538E679A1BAE66350076D26F = {
@@ -276,8 +276,8 @@
 			projectRoot = "";
 			targets = (
 				532BD5AF1BAE60E000057249 /* SwiftGraphLibrary */,
-				532BD5B81BAE60E000057249 /* SwiftGraphLibraryTests */,
 				538E679A1BAE66350076D26F /* DemoApp */,
+				532BE3091BAEDDCC00C07B5B /* SwiftGraphLibraryTests */,
 			);
 		};
 /* End PBXProject section */
@@ -290,7 +290,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		532BD5B71BAE60E000057249 /* Resources */ = {
+		532BE3081BAEDDCC00C07B5B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -320,11 +320,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		532BD5B51BAE60E000057249 /* Sources */ = {
+		532BE3061BAEDDCC00C07B5B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				532BD5BF1BAE60E000057249 /* SwiftGraphLibraryTests.swift in Sources */,
+				532BE30D1BAEDDCC00C07B5B /* TraversalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,10 +341,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		532BD5BC1BAE60E000057249 /* PBXTargetDependency */ = {
+		532BE3111BAEDDCC00C07B5B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 532BD5AF1BAE60E000057249 /* SwiftGraphLibrary */;
-			targetProxy = 532BD5BB1BAE60E000057249 /* PBXContainerItemProxy */;
+			targetProxy = 532BE3101BAEDDCC00C07B5B /* PBXContainerItemProxy */;
 		};
 		538E67C51BAE68080076D26F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -418,25 +418,26 @@
 			};
 			name = Release;
 		};
-		532BD5C31BAE60E000057249 /* Debug */ = {
+		532BE3131BAEDDCC00C07B5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SwiftGraphLibraryTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.circle38.SwiftGraphLibraryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
-		532BD5C41BAE60E000057249 /* Release */ = {
+		532BE3141BAEDDCC00C07B5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = SwiftGraphLibraryTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.circle38.SwiftGraphLibraryTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -563,11 +564,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		532BD5C61BAE60E000057249 /* Build configuration list for PBXNativeTarget "SwiftGraphLibraryTests" */ = {
+		532BE3121BAEDDCC00C07B5B /* Build configuration list for PBXNativeTarget "SwiftGraphLibraryTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				532BD5C31BAE60E000057249 /* Debug */,
-				532BD5C41BAE60E000057249 /* Release */,
+				532BE3131BAEDDCC00C07B5B /* Debug */,
+				532BE3141BAEDDCC00C07B5B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -579,6 +580,7 @@
 				538E67AC1BAE66350076D26F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		53D2606F1B9B532000492E7F /* Build configuration list for PBXProject "concepts" */ = {
 			isa = XCConfigurationList;

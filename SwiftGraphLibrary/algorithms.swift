@@ -26,9 +26,9 @@ public func depthFirstSearch<
   colorMap.put(startVertex, value: .Black)
 }
 
-class AccumulatorVisitor<Vertex>: Visitor {
-  var accumulator = [Vertex]()
-  func discoverVertex(vertex: Vertex) {
+public class AccumulatorVisitor<Vertex>: Visitor {
+  public private(set) var accumulator = [Vertex]()
+  public func discoverVertex(vertex: Vertex) {
     accumulator.append(vertex)
   }
 }
