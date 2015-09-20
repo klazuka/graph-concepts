@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53121A5D1BAEE73300A86779 /* SpreadsheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53121A5C1BAEE73300A86779 /* SpreadsheetTests.swift */; settings = {ASSET_TAGS = (); }; };
+		53121A5F1BAEEF4600A86779 /* spreadsheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53121A5E1BAEEF4600A86779 /* spreadsheet.swift */; settings = {ASSET_TAGS = (); }; };
 		532BD5C91BAE614A00057249 /* algorithms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BD5C71BAE614A00057249 /* algorithms.swift */; settings = {ASSET_TAGS = (); }; };
 		532BD5CA1BAE614A00057249 /* concepts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BD5C81BAE614A00057249 /* concepts.swift */; settings = {ASSET_TAGS = (); }; };
 		532BD5CC1BAE618500057249 /* concrete_types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532BD5CB1BAE618500057249 /* concrete_types.swift */; settings = {ASSET_TAGS = (); }; };
@@ -55,6 +57,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		53121A5C1BAEE73300A86779 /* SpreadsheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpreadsheetTests.swift; sourceTree = "<group>"; };
+		53121A5E1BAEEF4600A86779 /* spreadsheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = spreadsheet.swift; sourceTree = "<group>"; };
 		532BD5B01BAE60E000057249 /* SwiftGraphLibrary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftGraphLibrary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		532BD5C71BAE614A00057249 /* algorithms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = algorithms.swift; sourceTree = "<group>"; };
 		532BD5C81BAE614A00057249 /* concepts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = concepts.swift; sourceTree = "<group>"; };
@@ -108,6 +112,7 @@
 				532BD5C71BAE614A00057249 /* algorithms.swift */,
 				532BD5CB1BAE618500057249 /* concrete_types.swift */,
 				532BD5C81BAE614A00057249 /* concepts.swift */,
+				53121A5E1BAEEF4600A86779 /* spreadsheet.swift */,
 			);
 			path = SwiftGraphLibrary;
 			sourceTree = "<group>";
@@ -115,6 +120,7 @@
 		532BE30B1BAEDDCC00C07B5B /* SwiftGraphLibraryTests */ = {
 			isa = PBXGroup;
 			children = (
+				53121A5C1BAEE73300A86779 /* SpreadsheetTests.swift */,
 				532BE30C1BAEDDCC00C07B5B /* TraversalTests.swift */,
 				532BE30E1BAEDDCC00C07B5B /* Info.plist */,
 			);
@@ -314,6 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53121A5F1BAEEF4600A86779 /* spreadsheet.swift in Sources */,
 				532BD5CC1BAE618500057249 /* concrete_types.swift in Sources */,
 				532BD5CA1BAE614A00057249 /* concepts.swift in Sources */,
 				532BD5C91BAE614A00057249 /* algorithms.swift in Sources */,
@@ -324,6 +331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53121A5D1BAEE73300A86779 /* SpreadsheetTests.swift in Sources */,
 				532BE30D1BAEDDCC00C07B5B /* TraversalTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
