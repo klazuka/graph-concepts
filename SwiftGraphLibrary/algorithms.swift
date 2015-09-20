@@ -5,8 +5,8 @@ public func depthFirstSearch<
   C: ReadWritePropertyMap,
   V: Visitor
   where G.Vertex == V.Vertex,
-        C.Key == G.Vertex,
-        C.Value == VertexColorType
+        C.Key    == G.Vertex,
+        C.Value  == VertexColorType
   >
   (graph: G, startVertex: G.Vertex, inout colorMap: C, visitor: V) {
   
@@ -75,17 +75,16 @@ public func breadthFirstSearch<
   C: ReadWritePropertyMap,
   V: Visitor
   where G.Vertex == V.Vertex,
-        C.Key == G.Vertex,
-        C.Value == VertexColorType
+        C.Key    == G.Vertex,
+        C.Value  == VertexColorType
   >
   (graph: G, startVertex: G.Vertex, var colorMap: C, visitor: V) {
     if graph.numVertices() == 0 {
       return
     }
     
-    for vertex in g.vertices() {
-      // TODO why do I need to force cast here? (Int vs G.Vertex)
-      colorMap.put(vertex as! G.Vertex, value: VertexColorType.White)
+    for vertex in graph.vertices() {
+      colorMap.put(vertex, value: .White)
     }
     
     var queue = Array<G.Vertex>()

@@ -30,7 +30,7 @@ extension Orange: KComparable {
   }
 }
 
-private func run() {
+func runApplesAndOrangesDemo() {
   
   print(42.better(99))
   
