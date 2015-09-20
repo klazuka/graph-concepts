@@ -1,11 +1,6 @@
 import Foundation
 
-// TODO remoove me
-class DummyVisitor<Vertex>: Visitor {
-  func discoverVertex(vertex: Vertex) {}
-}
-
-func depthFirstSearch<
+public func depthFirstSearch<
   G: IncidenceGraph,
   C: ReadWritePropertyMap,
   V: Visitor
@@ -13,16 +8,13 @@ func depthFirstSearch<
         C.Key == G.Vertex,
         C.Value == VertexColorType
   >
-  (graph: G, startVertex: G.Vertex, inout colorMap: C, visitor: V)
-  -> [G.Vertex] // TODO get rid of return value in-lieu of Visitor
-{
-  var rest = Array<G.Vertex>()
+  (graph: G, startVertex: G.Vertex, inout colorMap: C, visitor: V) {
   
   for v in graph.outEdges(startVertex).map(graph.target) {
     switch colorMap.get(v) {
     case .White:
       colorMap.put(v, value: .Gray)
-      rest.appendContentsOf(depthFirstSearch(graph, startVertex: v, colorMap: &colorMap, visitor: visitor))
+      depthFirstSearch(graph, startVertex: v, colorMap: &colorMap, visitor: visitor)
     case .Gray:
       continue
     case .Black:
@@ -30,15 +22,18 @@ func depthFirstSearch<
     }
   }
   
-  rest.append(startVertex)
   visitor.discoverVertex(startVertex)
   colorMap.put(startVertex, value: .Black)
-  
-  return rest
 }
 
+class AccumulatorVisitor<Vertex>: Visitor {
+  var accumulator = [Vertex]()
+  func discoverVertex(vertex: Vertex) {
+    accumulator.append(vertex)
+  }
+}
 
-func topologicalSort<
+public func topologicalSort<
   G: protocol<IncidenceGraph, VertexListGraph>
   >
   (graph: G) -> [G.Vertex] {
@@ -47,6 +42,7 @@ func topologicalSort<
       return []
     }
     
+    // find the root vertices
     var roots = Set<G.Vertex>(graph.vertices())
     for u in graph.vertices() {
       for v in graph.outEdges(u).map(graph.target) {
@@ -55,7 +51,6 @@ func topologicalSort<
         }
       }
     }
-    
     assert(!roots.isEmpty, "not a DAG")
     
     // important, we must initialize the color map outside of DFS so that we can share
@@ -67,17 +62,15 @@ func topologicalSort<
       colorMap.put(u, value: .White)
     }
     
-    let visitor = DummyVisitor<G.Vertex>()
-    
-    var result = Array<G.Vertex>()
+    // walk the graph
+    let visitor = AccumulatorVisitor<G.Vertex>()
     for root in roots {
-      result.appendContentsOf(depthFirstSearch(graph, startVertex: root, colorMap: &colorMap, visitor: visitor))
+      depthFirstSearch(graph, startVertex: root, colorMap: &colorMap, visitor: visitor)
     }
-    
-    return result
+    return visitor.accumulator
 }
 
-func breadthFirstSearch<
+public func breadthFirstSearch<
   G: protocol<IncidenceGraph, VertexListGraph>,
   C: ReadWritePropertyMap,
   V: Visitor
