@@ -1,6 +1,6 @@
 import Foundation
 
-public struct CellName: Equatable {
+public struct CellName {
   let row: Int
   let column: Int
   
@@ -14,7 +14,7 @@ public struct CellName: Equatable {
     return "\(columnLetter)\(row+1)"
   }
   
-  init(humanName: String) {
+  init(_ humanName: String) {
     // note: only supports columns A-Z, rows 1-9
     assert(humanName.characters.count == 2)
     guard let columnLetter = humanName.utf8.first else { fatalError() }
@@ -23,9 +23,9 @@ public struct CellName: Equatable {
     let row = Int(rowNumText) - 1
     self.init(row: row, column: column)
   }
-  
 }
 
+extension CellName: Equatable {}
 public func ==(lhs: CellName, rhs: CellName) -> Bool {
   return lhs.row == rhs.row && lhs.column == rhs.column
 }
@@ -65,7 +65,7 @@ public enum Cell {
             let end = textContent.characters.indexOf(")")?.predecessor()
             else { return nil }
       return textContent[begin...end].componentsSeparatedByString(",").map { cellHumanName in
-        return CellName(humanName: cellHumanName)
+        return CellName(cellHumanName)
       }
     }
     
@@ -99,6 +99,16 @@ public enum Cell {
     }
   }
 }
+
+public func ==(lhs: Cell, rhs: Cell) -> Bool {
+  switch (lhs,rhs) {
+  case let (.Number(x), .Number(y)) where x == y: return true
+  case let (.Product(a), .Product(b)) where a == b: return true
+  case let (.Sum(a), .Sum(b)) where a == b: return true
+  default: return false
+  }
+}
+extension Cell: Equatable {}
 
 // parse input where pipes separate columns and newlines separate rows
 // example input: "100|42\n=PRODUCT(A1,B1)|=SUM(A2,B1)"
