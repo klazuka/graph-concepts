@@ -1,22 +1,34 @@
 import XCTest
 @testable import SwiftGraphLibrary
 
+func get(name: CellName, _ cells: ParsedCells) -> Cell {
+  for (row, column, formula) in cells {
+    let otherName = makeCellName(row: row, column: column)
+    if otherName == name {
+      return formula
+    }
+  }
+  fatalError("could not find formula with name \(name)")
+}
+
 class SpreadsheetTests: XCTestCase {
   
   func testSimple() {
     
     let input = "100|42\n=PRODUCT(A1,B1)|=SUM(A2,B1)"
     
-    let formulae = parse(input)
-    XCTAssertEqual(Cell.Number(100), formulae[CellName("A1")]!)
-    XCTAssertEqual(Cell.Number(42), formulae[CellName("B1")]!)
-    XCTAssertEqual(Cell.Product([CellName("A1"),CellName("B1")]), formulae[CellName("A2")]!)
-    XCTAssertEqual(Cell.Sum([CellName("A2"),CellName("B1")]), formulae[CellName("B2")]!)
+    let formulae = parseText(input)
+    XCTAssertEqual(get("A1", formulae), Cell.Number(100))
+    XCTAssertEqual(get("B1", formulae), Cell.Number(42))
+    XCTAssertEqual(get("A2", formulae), Cell.Product(["A1","B1"]))
+    XCTAssertEqual(get("B2", formulae), Cell.Sum(["A2","B1"]))
     
-    let result = evaluate(formulae)
-    XCTAssertEqual(100.0, result[CellName("A1")]!)
-    XCTAssertEqual(42.0, result[CellName("B1")]!)
-    XCTAssertEqual(4200.0, result[CellName("A2")]!)
-    XCTAssertEqual(4242.0, result[CellName("B2")]!)
+    let graph = buildGraph(formulae)
+    
+    let result = evaluate(graph)
+    XCTAssertEqual(result["A1"]!, 100.0)
+    XCTAssertEqual(result["A2"]!, 4200.0)
+    XCTAssertEqual(result["B1"]!, 42.0)
+    XCTAssertEqual(result["B2"]!, 4242.0)
   }
 }

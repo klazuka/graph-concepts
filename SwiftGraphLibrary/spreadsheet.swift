@@ -1,55 +1,22 @@
 import Foundation
 
-public struct CellName {
-  let row: Int
-  let column: Int
-  
-  init(row: Int, column: Int) {
-    self.row = row
-    self.column = column
-  }
-  
-  func humanName() -> String {
-    let columnLetter = Character(UnicodeScalar(0x41 + column))
-    return "\(columnLetter)\(row+1)"
-  }
-  
-  init(_ humanName: String) {
-    // note: only supports columns A-Z, rows 1-9
-    assert(humanName.characters.count == 2)
-    guard let columnLetter = humanName.utf8.first else { fatalError() }
-    let column = Int(columnLetter - 0x41)
-    let rowNumText = humanName.utf8[humanName.utf8.startIndex.successor()] - 0x30
-    let row = Int(rowNumText) - 1
-    self.init(row: row, column: column)
-  }
+public typealias CellGraph = AdjacencyListGraph<CellVertex,NoProperty>
+
+public typealias CellName = String // e.g. "A1", "A2", "B1", etc.
+
+func makeCellName(row row: Int, column: Int) -> CellName {
+  let columnLetter = Character(UnicodeScalar(0x41 + column))
+  return "\(columnLetter)\(row+1)"
 }
 
-extension CellName: Equatable {}
-public func ==(lhs: CellName, rhs: CellName) -> Bool {
-  return lhs.row == rhs.row && lhs.column == rhs.column
-}
-
-extension CellName: Hashable {
-  public var hashValue: Int { return humanName().hash }
-}
-
-extension CellName: CustomStringConvertible {
-  public var description: String { return humanName() }
-}
-
-extension CellName {
-  init(vertexDescriptor: Int) {
-    // super lazy mapping from 1D to 2D
-    let row = vertexDescriptor / 1000
-    let column = vertexDescriptor % 1000
-    self.init(row: row, column: column)
-  }
-  
-  func toVertexDescriptor() -> Int {
-    // super lazy mapping from 2D to 1D
-    return row * 1000 + column
-  }
+func rowAndColumnFromCellName(name: String) -> (Int,Int) {
+  // note: only supports columns A-Z, rows 1-9
+  assert(name.characters.count == 2)
+  guard let columnLetter = name.utf8.first else { fatalError() }
+  let column = Int(columnLetter - 0x41)
+  let rowNumText = name.utf8[name.utf8.startIndex.successor()] - 0x30
+  let row = Int(rowNumText) - 1
+  return (row, column)
 }
 
 
@@ -64,9 +31,8 @@ public enum Cell {
       guard let begin = textContent.characters.indexOf("(")?.successor(),
             let end = textContent.characters.indexOf(")")?.predecessor()
             else { return nil }
-      return textContent[begin...end].componentsSeparatedByString(",").map { cellHumanName in
-        return CellName(cellHumanName)
-      }
+      // TODO strip whitespace
+      return textContent[begin...end].componentsSeparatedByString(",")
     }
     
     if textContent.hasPrefix("=PRODUCT") {
@@ -110,6 +76,8 @@ public func ==(lhs: Cell, rhs: Cell) -> Bool {
 }
 extension Cell: Equatable {}
 
+public typealias ParsedCells = [(row: Int, column: Int, formula: Cell)]
+
 // parse input where pipes separate columns and newlines separate rows
 // example input: "100|42\n=PRODUCT(A1,B1)|=SUM(A2,B1)"
 // corresponds to
@@ -119,73 +87,72 @@ extension Cell: Equatable {}
 //    1 | 100              | 42
 //    2 | =PRODUCT(A1, B1) | =SUM(A2, B1)
 //
-public func parse(input: String) -> [CellName:Cell] {
-  var result = [CellName:Cell]()
+public func parseText(input: String) -> ParsedCells {
+  var result = ParsedCells()
   
   for (row, line) in input.componentsSeparatedByString("\n").enumerate() {
     for (column, phrase) in line.componentsSeparatedByString("|").enumerate() {
-      guard let cell = Cell(textContent: phrase) else { fatalError() }
-      let name = CellName(row: row, column: column)
-      result[name] = cell
+      guard let formula = Cell(textContent: phrase) else { fatalError() }
+      result.append((row: row, column: column, formula: formula))
     }
   }
 
   return result
 }
 
-private func buildGraph(cells: [CellName:Cell]) -> AdjacencyListGraph {
-  var edges = Array<AdjacencyListGraph.Edge>()
+public struct CellVertex {
+  let name: String
+  let row: Int
+  let column: Int
+  let formula: Cell
+}
+
+public func buildGraph(cells: ParsedCells) -> CellGraph {
+  var graph = CellGraph()
   
-  for (name, cell) in cells {
-    for dependency in cell.dependencies() {
-      edges.append((name.toVertexDescriptor(), dependency.toVertexDescriptor()))
+  var mapping: [CellName:CellGraph.Vertex] = [:]
+  
+  for (row, column, formula) in cells {
+    let name = makeCellName(row: row, column: column)
+    let u = graph.addVertex(CellVertex(name: name, row: row, column: column, formula: formula))
+    mapping[name] = u
+  }
+  
+  for (row, column, formula) in cells {
+    let name = makeCellName(row: row, column: column)
+    for dependency in formula.dependencies() {
+      let (u,v) = (mapping[name]!, mapping[dependency]!)
+      graph.addEdge(u, v: v)
     }
   }
   
-  return AdjacencyListGraph(edges: edges)
+  return graph
 }
 
-public func evaluate(cells: [CellName:Cell]) -> [CellName:Double] {
+public func evaluate(graph: CellGraph) -> [CellName:Double] {
 
-  let graph = buildGraph(cells)
   let evalOrder = topologicalSort(graph)
   print("will eval in order: ", evalOrder)
   
   var env = [CellName:Double]()
-  cells.keys.forEach { env[$0] = 0.0 }
-//  env = cells.map { ($0, 0.0) }
+  graph.vertices().forEach { vertexDescriptor in
+    let name = graph.get(vertexDescriptor).name
+    env[name] = 0.0
+  }
   
   print("START ENV", env)
   for vertexDescriptor in evalOrder {
     // find the Cell
-    let cellName = CellName(vertexDescriptor: vertexDescriptor)
-    let cell = cells[cellName]!
-    print("vd", vertexDescriptor, "name", cellName, "cell", cell)
+    let cellName = graph.get(vertexDescriptor).name
+    let formula = graph.get(vertexDescriptor).formula
+    let row = graph.get(vertexDescriptor).row
+    let column = graph.get(vertexDescriptor).column
+    print("vd", vertexDescriptor, "name", cellName, "formula", formula, "row", row, "column", column)
     
     // evaluate it and store the result in the shadow graph
-    env[cellName] = cell.evaluate(env)
+    env[cellName] = formula.evaluate(env)
   }
   print("FINAL ENV", env)
   
-  // convert the shadow graph to an assoc mapping from CellName to Double
-  // return it
   return env
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

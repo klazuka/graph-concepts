@@ -7,6 +7,20 @@ public protocol Graph {
   typealias Vertex: Hashable
 }
 
+// TODO BGL had it separate from `Graph`, but the Swift way would be a single Protocol
+public protocol MutableGraph: Graph {
+  mutating func addEdge(u: Vertex, v: Vertex) -> Edge
+  mutating func removeEdge(u: Vertex, v: Vertex)
+  mutating func removeEdge(e: Edge)
+  mutating func addVertex() -> Vertex
+  mutating func clearVertex(u: Vertex)
+  mutating func removeVertex(u: Vertex) // requires that `clearVertex` has been called first
+  // TODO implement me
+  //  mutating func removeEdgeIf(...)
+  //  mutating func removeOutEdgeIf(...)
+  //  mutating func removeInEdgeIf(...)
+}
+
 public protocol IncidenceGraph: Graph {
   func outEdges(vertex: Vertex) -> [Edge]
   func outDegree(vertex: Vertex) -> Int
@@ -47,10 +61,21 @@ public protocol WriteablePropertyMap {
 public protocol ReadWritePropertyMap: ReadablePropertyMap, WriteablePropertyMap {
 }
 
-//public protocol PropertyGraph: Graph {
-//  typealias PropertyMap: ReadablePropertyMap
-//  func get(property: PropertyMap.Key) -> PropertyMap.Value
-//}
+public protocol PropertyGraph: Graph {
+  typealias VertexProps
+  func get(u: Vertex) -> VertexProps
+  mutating func put(u: Vertex, properties: VertexProps)
+  
+  typealias EdgeProps
+  func get(e: Edge) -> EdgeProps
+  mutating func put(e: Edge, properties: EdgeProps)
+}
+
+// TODO BGL had it separate from `PropertyGraph`, but the Swift way would be a single Protocol
+public protocol MutablePropertyGraph: MutableGraph, PropertyGraph {
+  mutating func addVertex(properties: VertexProps) -> Vertex
+  mutating func addEdge(u: Vertex, v: Vertex, properties: EdgeProps) -> Edge
+}
 
 public protocol Visitor {
   typealias Vertex
