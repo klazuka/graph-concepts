@@ -31,4 +31,5 @@ class SpreadsheetTests: XCTestCase {
     XCTAssertEqual(result["B1"]!, 42.0)
     XCTAssertEqual(result["B2"]!, 4242.0)
   }
+  
 }

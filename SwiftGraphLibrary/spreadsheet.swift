@@ -9,7 +9,7 @@ func makeCellName(row row: Int, column: Int) -> CellName {
   return "\(columnLetter)\(row+1)"
 }
 
-func rowAndColumnFromCellName(name: String) -> (Int,Int) {
+func rowAndColumnFromCellName(name: CellName) -> (Int,Int) {
   // note: only supports columns A-Z, rows 1-9
   assert(name.characters.count == 2)
   guard let columnLetter = name.utf8.first else { fatalError() }
@@ -108,16 +108,18 @@ public struct CellVertex {
 }
 
 public func buildGraph(cells: ParsedCells) -> CellGraph {
-  var graph = CellGraph()
   
+  var graph = CellGraph()
   var mapping: [CellName:CellGraph.Vertex] = [:]
   
+  // Create a vertex for each spreadsheet cell
   for (row, column, formula) in cells {
     let name = makeCellName(row: row, column: column)
     let u = graph.addVertex(CellVertex(name: name, row: row, column: column, formula: formula))
     mapping[name] = u
   }
   
+  // Connect the vertices based on data-flow between cells
   for (row, column, formula) in cells {
     let name = makeCellName(row: row, column: column)
     for dependency in formula.dependencies() {
@@ -136,20 +138,17 @@ public func evaluate(graph: CellGraph) -> [CellName:Double] {
   
   var env = [CellName:Double]()
   graph.vertices().forEach { vertexDescriptor in
-    let name = graph.get(vertexDescriptor).name
+    let name = graph[vertexDescriptor].name
     env[name] = 0.0
   }
   
   print("START ENV", env)
   for vertexDescriptor in evalOrder {
-    // find the Cell
-    let cellName = graph.get(vertexDescriptor).name
-    let formula = graph.get(vertexDescriptor).formula
-    let row = graph.get(vertexDescriptor).row
-    let column = graph.get(vertexDescriptor).column
-    print("vd", vertexDescriptor, "name", cellName, "formula", formula, "row", row, "column", column)
+    // find the Cell and its formula
+    let cellName = graph[vertexDescriptor].name
+    let formula = graph[vertexDescriptor].formula
     
-    // evaluate it and store the result in the shadow graph
+    // evaluate it and store the result in the environment
     env[cellName] = formula.evaluate(env)
   }
   print("FINAL ENV", env)

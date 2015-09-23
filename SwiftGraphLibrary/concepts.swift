@@ -5,10 +5,7 @@ import Foundation
 public protocol Graph {
   typealias Edge
   typealias Vertex: Hashable
-}
-
-// TODO BGL had it separate from `Graph`, but the Swift way would be a single Protocol
-public protocol MutableGraph: Graph {
+  
   mutating func addEdge(u: Vertex, v: Vertex) -> Edge
   mutating func removeEdge(u: Vertex, v: Vertex)
   mutating func removeEdge(e: Edge)
@@ -63,16 +60,10 @@ public protocol ReadWritePropertyMap: ReadablePropertyMap, WriteablePropertyMap 
 
 public protocol PropertyGraph: Graph {
   typealias VertexProps
-  func get(u: Vertex) -> VertexProps
-  mutating func put(u: Vertex, properties: VertexProps)
-  
   typealias EdgeProps
-  func get(e: Edge) -> EdgeProps
-  mutating func put(e: Edge, properties: EdgeProps)
-}
-
-// TODO BGL had it separate from `PropertyGraph`, but the Swift way would be a single Protocol
-public protocol MutablePropertyGraph: MutableGraph, PropertyGraph {
+  subscript(u: Vertex) -> VertexProps { get set }
+  subscript(e: Edge) -> EdgeProps { get set }
+  
   mutating func addVertex(properties: VertexProps) -> Vertex
   mutating func addEdge(u: Vertex, v: Vertex, properties: EdgeProps) -> Edge
 }

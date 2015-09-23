@@ -44,7 +44,7 @@ public struct NoProperty {
 public struct AdjacencyListGraph<
   VertexProperties, // TODO can Swift provide a default arg for a generic type parameter list?
   EdgeProperties
-  > : MutablePropertyGraph, IncidenceGraph, VertexListGraph {
+  > : PropertyGraph, IncidenceGraph, VertexListGraph {
   
   public typealias Vertex = Int
   public typealias Edge = (Vertex, Vertex)
@@ -141,31 +141,30 @@ public struct AdjacencyListGraph<
   }
 
   // PropertyGraph
-  // TODO provide a custom subscript operator instead of get/put
   // TODO how to handle absence of vertex/edge properties?
   public typealias VertexProps = VertexProperties
-  public func get(u: Vertex) -> VertexProperties {
-    return vertexProperties[u]!
-  }
-  public mutating func put(u: Vertex, properties: VertexProperties) {
-    vertexProperties[u] = properties
-  }
-  
   public typealias EdgeProps = EdgeProperties
-  public func get(e: Edge) -> EdgeProperties {
-    let (u,v) = e
-    let list = adjacencyLists[u]!
-    let props = edgeProperties[u]!
-    return props[list.indexOf(v)!]
-  }
-  mutating public func put(e: Edge, properties: EdgeProperties) {
-    let (u,v) = e
-    let list = adjacencyLists[u]!
-    var props = edgeProperties[u]!
-    props[list.indexOf(v)!] = properties
-    edgeProperties[u] = props
+  
+  public subscript(u: Vertex) -> VertexProps {
+    get { return vertexProperties[u]! }
+    set { vertexProperties[u] = newValue }
   }
   
+  public subscript(e: Edge) -> EdgeProps {
+    get {
+      let (u,v) = e
+      let list = adjacencyLists[u]!
+      let props = edgeProperties[u]!
+      return props[list.indexOf(v)!]
+    }
+    set {
+      let (u,v) = e
+      let list = adjacencyLists[u]!
+      var props = edgeProperties[u]!
+      props[list.indexOf(v)!] = newValue
+      edgeProperties[u] = props
+    }
+  }
   
   public func source(edge: Edge) -> Vertex { return edge.0 }
   public func target(edge: Edge) -> Vertex { return edge.1 }
