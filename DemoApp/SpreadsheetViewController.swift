@@ -53,12 +53,12 @@ class SpreadsheetViewController: UIViewController {
     scrollView.frame = view.bounds
     
     let rowHeaderWidth: CGFloat = 30.0
-    let headerHeight: CGFloat = 44.0
+    let columnHeaderHeight: CGFloat = 44.0
     
     let cellHeight: CGFloat = 44.0
     let cellWidth: CGFloat = 200.0
     
-    var flowLayoutY: CGFloat = 20.0 // start out clearing the iOS status bar
+    var flowLayoutY: CGFloat = 20.0 // start just below the iOS status bar
     
     // layout the column header
     for column in 0..<numColumns {
@@ -67,9 +67,9 @@ class SpreadsheetViewController: UIViewController {
         x: cellWidth * CGFloat(column),
         y: flowLayoutY,
         width: cellWidth,
-        height: headerHeight)
+        height: columnHeaderHeight)
     }
-    flowLayoutY += headerHeight
+    flowLayoutY += columnHeaderHeight
     
     // layout the grid of cells
     for row in 0..<numRows {

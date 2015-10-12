@@ -2,7 +2,7 @@ import UIKit
 
 class CellView: UIView {
   
-  let label = UITextField()
+  let field = UITextField()
   
   required init?(coder aDecoder: NSCoder) { fatalError("not implemented") }
   
@@ -13,15 +13,15 @@ class CellView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     
-    label.text = "CELL"
-    label.textColor = .darkGrayColor()
-    label.backgroundColor = .whiteColor()
-    addSubview(label)
+    field.text = nil
+    field.textColor = .darkGrayColor()
+    field.backgroundColor = .whiteColor()
+    addSubview(field)
   }
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    label.frame = bounds.insetBy(dx: 4, dy: 4)
+    field.frame = bounds.insetBy(dx: 4, dy: 4)
   }
 
 }

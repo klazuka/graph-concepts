@@ -137,9 +137,9 @@
 				538E67B01BAE66F90076D26F /* Supporting Files */,
 				538E67AD1BAE667C0076D26F /* graph_demo.swift */,
 				538E67BD1BAE67050076D26F /* apples_and_oranges.swift */,
+				53B648C41BCBEFC5009902F1 /* CellView.swift */,
 				53B648B11BCBEAE1009902F1 /* SpreadsheetViewController.swift */,
 				53B648C61BCBF54B009902F1 /* UIView+Layout.swift */,
-				53B648C41BCBEFC5009902F1 /* CellView.swift */,
 			);
 			path = DemoApp;
 			sourceTree = "<group>";
