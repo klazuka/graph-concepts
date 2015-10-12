@@ -1,16 +1,23 @@
 import UIKit
+import SwiftGraphLibrary
 
-let numRows = 20
-let numColumns = 4
+let numRows = 2
+let numColumns = 2
 
 let columnNames = ["A", "B", "C", "D", "E", "F"] // TODO improve
 
 class SpreadsheetViewController: UIViewController {
   
+  // UI
   let scrollView = UIScrollView()
   var columnHeaderViews = [UIView]()
   var rowHeaderViews = [UIView]()
   var cellViews = [CellView]()
+  
+  // Data
+  var graph = CellGraph()
+  var lastEval: [CellName:Double] = [:]
+  
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -36,15 +43,63 @@ class SpreadsheetViewController: UIViewController {
     }
     
     // Create the grid
-    for _ in 0..<numRows {
-      for _ in 0..<numColumns {
+    for row in 0..<numRows {
+      for column in 0..<numColumns {
+        
+        let name = makeCellName(row: row, column: column)
+        let u = graph.addVertex(CellVertex(name: name, row: row, column: column, formula: .Empty))
+        print("added vertex", u, graph[u].name)
+        
         let cellView = CellView()
         cellView.backgroundColor = .darkGrayColor()
         scrollView.addSubview(cellView)
         cellViews.append(cellView)
+        cellView.textChangedHandler = { newText in
+          if let newFormula = Cell(textContent: newText) {
+            self.graph[u].formula = newFormula
+            self.recalculate()
+          }
+          else {
+            cellView.field.text = "ERROR"
+          }
+        }
       }
     }
     
+    recalculate()
+  }
+  
+  func recalculate() {
+
+    // remove all edges
+    for u in graph.vertices() {
+      graph.clearVertex(u)
+    }
+    
+    // build the edges
+    for u in graph.vertices() {
+      let formula = graph[u].formula
+      for dependency in formula.dependencies() {
+        // TODO find a cleaner and more efficient way to do the dependency lookup
+        for v in graph.vertices() {
+          if graph[v].name == dependency {
+            graph.addEdge(u, v: v)
+          }
+        }
+      }
+    }
+    
+    // evaluate
+    lastEval = evaluate(graph)
+    
+    // update the UI
+    for row in 0..<numRows {
+      for column in 0..<numColumns {
+        let cellView = cellViews[row*numColumns+column]
+        let name = makeCellName(row: row, column: column)
+        cellView.field.text = String(lastEval[name]!)
+      }
+    }
   }
   
   override func viewDidLayoutSubviews() {
@@ -56,7 +111,7 @@ class SpreadsheetViewController: UIViewController {
     let columnHeaderHeight: CGFloat = 44.0
     
     let cellHeight: CGFloat = 44.0
-    let cellWidth: CGFloat = 200.0
+    let cellWidth: CGFloat = 140.0
     
     var flowLayoutY: CGFloat = 20.0 // start just below the iOS status bar
     

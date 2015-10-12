@@ -4,7 +4,7 @@ public typealias CellGraph = AdjacencyListGraph<CellVertex,NoProperty>
 
 public typealias CellName = String // e.g. "A1", "A2", "B1", etc.
 
-func makeCellName(row row: Int, column: Int) -> CellName {
+public func makeCellName(row row: Int, column: Int) -> CellName {
   let columnLetter = Character(UnicodeScalar(0x41 + column))
   return "\(columnLetter)\(row+1)"
 }
@@ -26,7 +26,7 @@ public enum Cell {
   case Product([CellName])
   case Sum([CellName])
   
-  init?(textContent: String) {
+  public init?(textContent: String) {
     
     func parseFormulaArgs(text: String) -> [CellName]? {
       guard let begin = textContent.characters.indexOf("(")?.successor(),
@@ -44,13 +44,16 @@ public enum Cell {
       guard let names = parseFormulaArgs(textContent) else { return nil }
       self = .Sum(names)
     }
+    else if textContent.isEmpty {
+      self = .Empty
+    }
     else {
       guard let x = Double(textContent) else { return nil }
       self = .Number(x)
     }
   }
   
-  func dependencies() -> [CellName] {
+  public func dependencies() -> [CellName] {
     switch self {
     case .Empty:              return []
     case .Number(_):          return []
@@ -105,10 +108,17 @@ public func parseText(input: String) -> ParsedCells {
 }
 
 public struct CellVertex {
-  let name: String
-  let row: Int
-  let column: Int
-  let formula: Cell
+  public let name: String
+  public let row: Int
+  public let column: Int
+  public var formula: Cell
+  
+  public init(name: String, row: Int, column: Int, formula: Cell) {
+    self.name = name
+    self.row = row
+    self.column = column
+    self.formula = formula
+  }
 }
 
 public func buildGraph(cells: ParsedCells) -> CellGraph {
@@ -146,7 +156,6 @@ public func evaluate(graph: CellGraph) -> [CellName:Double] {
     env[name] = 0.0
   }
   
-  print("START ENV", env)
   for vertexDescriptor in evalOrder {
     // find the Cell and its formula
     let cellName = graph[vertexDescriptor].name
@@ -154,8 +163,10 @@ public func evaluate(graph: CellGraph) -> [CellName:Double] {
     
     // evaluate it and store the result in the environment
     env[cellName] = formula.evaluate(env)
+    
+    print("eval vd=\(vertexDescriptor), \(cellName): \(formula) => \(env[cellName])")
   }
-  print("FINAL ENV", env)
+  print("EVAL RESULT", env)
   
   return env
 }

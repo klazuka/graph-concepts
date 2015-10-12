@@ -94,9 +94,17 @@ public struct AdjacencyListGraph<
   }
   
   public mutating func clearVertex(u: Vertex) {
-    // TODO
-    fatalError()
+    for (u, vs) in adjacencyLists {
+      if let targetIndex = vs.indexOf(u) {
+        adjacencyLists[u]?.removeAtIndex(targetIndex)
+        edgeProperties[u]?.removeAtIndex(targetIndex)
+      }
+    }
+    
+    adjacencyLists[u] = []
+    edgeProperties[u] = []
   }
+  
   public mutating func removeVertex(u: Vertex) {
     // TODO
     fatalError()
