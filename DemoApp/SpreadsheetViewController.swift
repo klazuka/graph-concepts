@@ -1,7 +1,7 @@
 import UIKit
 
-let numRows = 5
-let numColumns = 3
+let numRows = 20
+let numColumns = 4
 
 let columnNames = ["A", "B", "C", "D", "E", "F"] // TODO improve
 
@@ -9,6 +9,7 @@ class SpreadsheetViewController: UIViewController {
   
   let scrollView = UIScrollView()
   var columnHeaderViews = [UIView]()
+  var rowHeaderViews = [UIView]()
   var cellViews = [CellView]()
   
   override func viewDidLoad() {
@@ -27,17 +28,18 @@ class SpreadsheetViewController: UIViewController {
     }
     
     // Create the row header
+    for row in 0..<numRows {
+      let label = UILabel()
+      label.text = String(row + 1)
+      scrollView.addSubview(label)
+      rowHeaderViews.append(label)
+    }
     
     // Create the grid
     for _ in 0..<numRows {
       for _ in 0..<numColumns {
         let cellView = CellView()
-        
-//        let hue = CGFloat(row) / CGFloat(numRows - 1)
-//        let saturation = 0.2 + (0.6 * (CGFloat(column) / CGFloat(numColumns - 1)))
-//        cellView.backgroundColor = UIColor(hue: hue, saturation: saturation, brightness: 1.0, alpha: 1.0)
         cellView.backgroundColor = .darkGrayColor()
-        
         scrollView.addSubview(cellView)
         cellViews.append(cellView)
       }
@@ -50,13 +52,15 @@ class SpreadsheetViewController: UIViewController {
     
     scrollView.frame = view.bounds
     
+    let rowHeaderWidth: CGFloat = 30.0
     let headerHeight: CGFloat = 44.0
     
     let cellHeight: CGFloat = 44.0
-    let cellWidth = view.bounds.size.width / CGFloat(numColumns)
+    let cellWidth: CGFloat = 200.0
     
     var flowLayoutY: CGFloat = 20.0 // start out clearing the iOS status bar
     
+    // layout the column header
     for column in 0..<numColumns {
       let columnLabel = columnHeaderViews[column]
       columnLabel.frame = CGRect(
@@ -66,21 +70,34 @@ class SpreadsheetViewController: UIViewController {
         height: headerHeight)
     }
     flowLayoutY += headerHeight
-
+    
+    // layout the grid of cells
     for row in 0..<numRows {
+      
+      // layout the row header
+      let rowLabel = rowHeaderViews[row]
+      rowLabel.frame = CGRect(
+        x: 0,
+        y: flowLayoutY,
+        width: rowHeaderWidth,
+        height: cellHeight)
+      
+      // layout the cells within this row
       for column in 0..<numColumns {
         let cellView = cellViews[row*numColumns+column]
         cellView.frame = CGRect(
-          x: cellWidth * CGFloat(column),
-          y: flowLayoutY + cellHeight * CGFloat(row),
+          x: rowHeaderWidth + cellWidth * CGFloat(column),
+          y: flowLayoutY,
           width: cellWidth,
           height: cellHeight)
       }
+      
+      flowLayoutY += cellHeight
     }
     
-    scrollView.contentSize = CGSize(
-      width: CGFloat(numColumns) * cellWidth,
-      height: CGFloat(numRows) * cellHeight)
+    // tell the scroll view how big its content is
+    let lastCell = cellViews.last!
+    scrollView.contentSize = CGSize(width: lastCell.right, height: lastCell.bottom)
   }
   
 }
