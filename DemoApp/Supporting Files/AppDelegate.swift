@@ -15,8 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
-    runGraphDemo()
+    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    window?.makeKeyAndVisible()
+    
+//    runGraphDemo()
 //    runApplesAndOrangesDemo()
+    let spread = SpreadsheetViewController()
+    window?.rootViewController = spread
     
     return true
   }
