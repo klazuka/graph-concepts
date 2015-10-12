@@ -21,6 +21,7 @@ func rowAndColumnFromCellName(name: CellName) -> (Int,Int) {
 
 
 public enum Cell {
+  case Empty
   case Number(Double)
   case Product([CellName])
   case Sum([CellName])
@@ -51,6 +52,7 @@ public enum Cell {
   
   func dependencies() -> [CellName] {
     switch self {
+    case .Empty:              return []
     case .Number(_):          return []
     case .Product(let names): return names
     case .Sum(let names):     return names
@@ -59,6 +61,7 @@ public enum Cell {
   
   func evaluate(env: [CellName:Double]) -> Double {
     switch self {
+    case .Empty:              return 0.0 // How does Excel handle this? Should it instead be a fatal error?
     case .Number(let x):      return x
     case .Product(let names): return names.map({env[$0]!}).reduce(1,combine:*)
     case .Sum(let names):     return names.map({env[$0]!}).reduce(0,combine:+)
@@ -68,6 +71,7 @@ public enum Cell {
 
 public func ==(lhs: Cell, rhs: Cell) -> Bool {
   switch (lhs,rhs) {
+  case (.Empty, .Empty): return true
   case let (.Number(x), .Number(y)) where x == y: return true
   case let (.Product(a), .Product(b)) where a == b: return true
   case let (.Sum(a), .Sum(b)) where a == b: return true
