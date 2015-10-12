@@ -38,12 +38,12 @@ public enum Cell {
     if textContent.hasPrefix("=PRODUCT") {
       guard let names = parseFormulaArgs(textContent) else { return nil }
       self = .Product(names)
-      
-    } else if textContent.hasPrefix("=SUM") {
+    }
+    else if textContent.hasPrefix("=SUM") {
       guard let names = parseFormulaArgs(textContent) else { return nil }
       self = .Sum(names)
-
-    } else {
+    }
+    else {
       guard let x = Double(textContent) else { return nil }
       self = .Number(x)
     }

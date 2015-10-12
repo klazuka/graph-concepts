@@ -2,9 +2,9 @@ import XCTest
 @testable import SwiftGraphLibrary
 
 func get(name: CellName, _ cells: ParsedCells) -> Cell {
+  let (targetRow, targetColumn) = rowAndColumnFromCellName(name)
   for (row, column, formula) in cells {
-    let otherName = makeCellName(row: row, column: column)
-    if otherName == name {
+    if row == targetRow && column == targetColumn {
       return formula
     }
   }
