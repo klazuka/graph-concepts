@@ -2,7 +2,7 @@ import UIKit
 
 class CellView: UIView {
   
-  let label = UILabel()
+  let label = UITextField()
   
   required init?(coder aDecoder: NSCoder) { fatalError("not implemented") }
   
@@ -14,8 +14,8 @@ class CellView: UIView {
     super.init(frame: frame)
     
     label.text = "CELL"
-    label.textColor = .blackColor()
-    label.backgroundColor = .grayColor()
+    label.textColor = .darkGrayColor()
+    label.backgroundColor = .whiteColor()
     addSubview(label)
   }
   
